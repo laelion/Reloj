@@ -1,4 +1,4 @@
-
+const reqdate = require ("./fdate.js")
 const express = require("express");
 const app = express();
 const sql = require('mssql')
@@ -21,6 +21,63 @@ const sqlConfig = {
 
 const conexion = new sql.ConnectionPool(sqlConfig);
 const request = new sql.Request(conexion);
+const queryS = "SELECT * FROM reloj"
+const queryR = "DELETE FROM RELOJ"
+
+async function conectar() {
+  await conexion.connect()
+}
 
 
-module.exports = {sql, sqlConfig, conexion, request};
+
+//Seleccionar
+async function seleccionar(req, res){
+  try{    
+      await conectar();
+      let resultado = await  request.query(queryS)
+      res.json(resultado)
+  }
+  catch(errores){
+      console.log(errores)
+  }
+  }
+
+//Insertar o Modificar
+async function insertar(req, res){
+        let date = reqdate.parsearFecha(req.query.fecha)
+        let reloj = reqdate.armarJson(date)
+          try {
+          await conectar()
+          const seleccion = await request.query(queryS)
+           if(seleccion.rowsAffected==0){
+               let insertar =  await request.query("INSERT INTO reloj values (" 
+               + reloj.Año + "," + reloj.Mes + "," + reloj.Dia + "," + reloj.Hora + "," + reloj.Minutos + "," + reloj.Segundos + ")")
+               console.log(insertar)
+               res.send(reloj)
+           }else{
+                let modificar = await request.query("UPDATE reloj set año=" + reloj.Año + ", mes=" + reloj.Mes + ", dia= " + reloj.Dia
+                + ", hora=" + reloj.Hora + ", minutos= " + reloj.Minutos + ", segundos= " + reloj.Segundos)
+                console.log(modificar)
+                res.send( reloj)
+           }
+        } catch (errores) {
+            console.log(errores)
+        }
+      }
+
+      //Borrar
+async function borrar(req, res){
+        try {
+          await conectar()
+          let resultado = await request.query(queryR)
+          if (resultado.rowsAffected!=0){
+            res.send("Campos borrados correctamente");
+        }else{
+            res.send("No hay campos para borrar");
+        }
+        } catch (error) {
+          console.log(error)
+        }
+}              
+
+module.exports = {sql, sqlConfig, conexion, request, seleccionar, insertar, borrar}
