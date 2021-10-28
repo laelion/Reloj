@@ -41,36 +41,48 @@ async function seleccionar(req, res){
       console.log(errores)
   }
   }
+//Seleccionas sin Json
+  var seleccionarSinJson = async function (req, res){
+    try{    
+        await conectar()
+        let resultadoS = await request.query(queryS)
+        return resultadoS
+        
+    }
+    catch(errores){
+        console.log(errores)
+    }
+    }
 
 //Insertar o Modificar
 async function insertar(req, res){
+ 
         let date = reqdate.parsearFecha(req.query.fecha)
         let reloj = reqdate.armarJson(date)
           try {
-          await conectar()
-          const seleccion = await request.query(queryS)
-           if(seleccion.rowsAffected==0){
+              const resulatosS = await seleccionarSinJson()
+              if(resulatosS.rowsAffected==0){
                let insertar =  await request.query("INSERT INTO reloj values (" 
                + reloj.Año + "," + reloj.Mes + "," + reloj.Dia + "," + reloj.Hora + "," + reloj.Minutos + "," + reloj.Segundos + ")")
                console.log(insertar)
                res.send(reloj)
-           }else{
+                }else{
                 let modificar = await request.query("UPDATE reloj set año=" + reloj.Año + ", mes=" + reloj.Mes + ", dia= " + reloj.Dia
                 + ", hora=" + reloj.Hora + ", minutos= " + reloj.Minutos + ", segundos= " + reloj.Segundos)
-                console.log(modificar)
+                console.log("modificar")
                 res.send( reloj)
-           }
-        } catch (errores) {
-            console.log(errores)
-        }
-      }
+              }
+                }catch(errores){
+                console.log(errores)
+                }
+}
 
       //Borrar
 async function borrar(req, res){
         try {
           await conectar()
-          let resultado = await request.query(queryR)
-          if (resultado.rowsAffected!=0){
+          let resultadoD = await request.query(queryR)
+          if (resultadoD.rowsAffected!=0){
             res.send("Campos borrados correctamente");
         }else{
             res.send("No hay campos para borrar");
