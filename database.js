@@ -2,6 +2,7 @@ const reqdate = require("./fdate.js")
 const express = require("express");
 const app = express();
 const sql = require('mssql')
+
 const sqlConfig = {
   user: "lion",
   password: "123",
@@ -19,10 +20,10 @@ const sqlConfig = {
 }
 const conexion = new sql.ConnectionPool(sqlConfig);
 const request =  new sql.Request(conexion);
-
+//Seleccionar
 async function seleccionar(req, res) {
   try {
-    let respuesta = hacerElSelectALaBaseDeDatos()
+    let respuesta = await hacerElSelectALaBaseDeDatos()
     console.log(respuesta)
     res.json(respuesta)
   }
@@ -30,17 +31,17 @@ async function seleccionar(req, res) {
     console.log(errores)
   }
 }
-
+//Seleccionar sin Response
 async function seleccionarSinRES() {
   try {
-    let respuesta = hacerElSelectALaBaseDeDatos()
-    respuesta
+    let respuesta = await hacerElSelectALaBaseDeDatos()
+    return respuesta
   }
   catch (errores) {
     console.log(errores)
   }
 }
-
+// Insertar o Modificar
 async function insertar(req, res) {
   let date = reqdate.parsearFecha(req.query.fecha)
   let reloj = reqdate.armarJson(date)
@@ -62,7 +63,7 @@ async function insertar(req, res) {
 //Borrar
 async function borrar(req, res) {
   try {
-    let resultadoD =  hacerElEliminarALaBaseDeDatos()
+    let resultadoD = await hacerElEliminarALaBaseDeDatos()
     console.log(resultadoD)
     if (resultadoD.rowsAffected != 0) {
       res.send("Campos borrados correctamente");
@@ -75,28 +76,28 @@ async function borrar(req, res) {
 }
 
 async function conectar() {
- 
- 
-     conexion.connect()
+     await  conexion.connect()
 }
 
 var hacerElSelectALaBaseDeDatos = async function () {
-   ejecutarquery("SELECT * FROM reloj")
+    let respuesta = await ejecutarquery("SELECT * FROM reloj")
+    return respuesta
 }
 
 var hacerElmodificarALaBaseDeDatos = async function (reloj) {
-   ejecutarquery("UPDATE reloj set año=" + reloj.Año + ", mes=" + reloj.Mes + ", dia= " + reloj.Dia
+   let respuesta = await ejecutarquery("UPDATE reloj set año=" + reloj.Año + ", mes=" + reloj.Mes + ", dia= " + reloj.Dia
   + ", hora=" + reloj.Hora + ", minutos= " + reloj.Minutos + ", segundos= " + reloj.Segundos)
+  return respuesta
 }
 
 var hacerElinsertALaBaseDeDatos = async function (reloj) {
-   ejecutarquery("INSERT INTO reloj values (" + reloj.Año + "," + reloj.Mes + "," + reloj.Dia + "," + reloj.Hora + "," + reloj.Minutos + "," + reloj.Segundos + ")")
-
+  let respuesta = await ejecutarquery("INSERT INTO reloj values (" + reloj.Año + "," + reloj.Mes + "," + reloj.Dia + "," + reloj.Hora + "," + reloj.Minutos + "," + reloj.Segundos + ")")
+  return respuesta
 }
 
 var hacerElEliminarALaBaseDeDatos = async function () {
-    ejecutarquery("DELETE FROM reloj")
-
+    let resultado = await ejecutarquery("DELETE FROM reloj")
+    return resultado
 }
 
 var ejecutarquery = async function (query) {
