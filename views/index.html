@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/librerias/bootstrap.min.css">
+    <link rel="stylesheet" href="/librerias/fontawesome/css/all.css">
+</head>
+<body>
+    
+    
+        <i id='cloud' class="fas fa-cloud"></i>
+
+        <form id="FormEnviarDate" role="form">
+        <input type="datetime-local" max="2099-06-14T00:00" id="inputReloj">
+        <input id="submit" type="submit" form="FormEnviarDate">
+        </form>
+
+        <div id="contenedroRelojBase"></div>
+
+        
+        <div class="reloj"></div>
+        <img src="/imagenes/aguja.png" alt="" id="horas">
+        <img src="/imagenes/agujaMinutos.png" alt="" id="minutos">
+        <img src="/imagenes/agujaSegundos.png" alt="" id="segundos">
+    
+    
+   
+
+    <script src="/main.js"></script>
+</body>
+</html>

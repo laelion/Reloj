@@ -1,0 +1,56 @@
+ body{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(#0cebeb,#20e3b2,#29ffc6) no-repeat center center fixed;
+    overflow-x: hidden;
+ }
+
+ #cloud{
+   overflow-x: hidden;
+    position: absolute;
+     font-size: 15rem;
+     opacity: 0.3;
+     color: brown; 
+ }
+
+#FormEnviarDate{
+   z-index: 2;
+}
+
+ #submit{
+   border-radius: 0.5rem;
+   z-index: 1;
+ }
+
+ #contenedroRelojBase{
+    margin-top: 2rem;
+    font-size: 0.5rem;
+ }
+
+
+ .reloj {
+	padding: 5rem;
+	background-image: url("/imagenes/gis.jpg");
+	width: 1rem;
+	height: 1rem;
+	border-radius: 9rem;
+	background-color: #ededed;
+	background-size: 100%;
+	border: 0.5rem solid #555;
+   z-index:1;
+   position: absolute;
+   margin-top: 30rem;
+}
+
+img {
+   margin-top: 15rem;
+	height: 9rem;
+   position: absolute;
+   z-index:2;
+}
+
+
+

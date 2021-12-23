@@ -1,24 +1,27 @@
-function parsearFecha(fecha) {
-    if(fecha.length == 10){
-        return new Date(fecha)
-    }
-    if(parseInt(fecha) > 99){
-       return new Date(parseInt(fecha))
-    }
-}
+// function parsearFecha(datos) {
+//     if(datos.length == 10){
+//         return new Date(datos)
+//     }
+//     if(parseInt(datos) > 99){
+//        return new Date(parseInt(datos))
+//     }
+// }
 
-function armarJson(date) {
+function armarJson(datos) {
+    
+    datosParseados = new Date(datos.datos)
+    
     return {
-        "Año": date.getFullYear() ,
-        "Mes": date.getMonth(),
-        "Dia": date.getDate(),
-        "Hora": date.getHours(),
-        "Minutos": date.getMinutes(),
-        "Segundos":date.getSeconds()
+        "Año": datosParseados.getFullYear() ,
+        "Mes": datosParseados.getMonth(),
+        "Dia": datosParseados.getDate(),
+        "Hora": datosParseados.getHours(),
+        "Minutos": datosParseados.getMinutes(),
+        "Segundos":datosParseados.getSeconds()
     }
 }
 
 
 
 
-module.exports = {parsearFecha,armarJson}
+module.exports = {armarJson}

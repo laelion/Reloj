@@ -3,6 +3,21 @@ const reqbase = require ("./database.js")
 const PUERTO = 3000
 const express = require("express");
 const app = express();
+const path = require ("path")
+const bodyParser = require('body-parser');
+
+
+
+
+app.use( bodyParser.urlencoded({ extended: true }) );
+app.use( bodyParser.json() );
+app.use(express.static(__dirname + "/public"))
+app.set('views', 'index.html')
+
+//index html
+app.get("/", function (req, res) {
+     res.sendFile(path.join(__dirname, "views/index.html"))
+})
 
 //Fecha
 app.post("/fecha", function (req, res)  {

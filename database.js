@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const sql = require('mssql')
 
+
+
 const sqlConfig = {
   user: "lion",
   password: "123",
@@ -24,7 +26,7 @@ const request =  new sql.Request(conexion);
 async function seleccionar(req, res) {
   try {
     let respuesta = await hacerElSelectALaBaseDeDatos()
-    console.log(respuesta)
+  
     res.json(respuesta)
   }
   catch (errores) {
@@ -43,11 +45,13 @@ async function seleccionarSinRES() {
 }
 // Insertar o Modificar
 async function insertar(req, res) {
-  let date = reqdate.parsearFecha(req.query.fecha)
-  let reloj = reqdate.armarJson(date)
+  // console.log(req.body)
+  // let date = reqdate.parsearFecha(req.body)
+  // console.log(date)
+  
+  let reloj = reqdate.armarJson(req.body)
   try {
     const resulatosS = await seleccionarSinRES()
-    console.log(resulatosS)
     if (resulatosS.rowsAffected == 0) {
         hacerElinsertALaBaseDeDatos(reloj)
       res.send(reloj)
