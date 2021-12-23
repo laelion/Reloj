@@ -68,11 +68,11 @@ async function insertar(req, res) {
 async function borrar(req, res) {
   try {
     let resultadoD = await hacerElEliminarALaBaseDeDatos()
-    console.log(resultadoD)
+   
     if (resultadoD.rowsAffected != 0) {
-      res.send("Campos borrados correctamente");
+      res.send(JSON.stringify("Campos borrados correctamente"));
     } else {
-      res.send("No hay campos para borrar");
+      res.send(JSON.stringify("No hay campos para borrar"));
     }
   } catch (error) {
     console.log(error)

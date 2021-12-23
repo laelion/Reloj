@@ -24,12 +24,20 @@
    border-radius: 0.5rem;
    z-index: 1;
  }
-
+#submit:hover{
+   transform: scale(1.1);
+   color: brown;
+}
  #contenedroRelojBase{
     margin-top: 2rem;
-    font-size: 0.5rem;
+    font-size: 1rem;
  }
 
+ @media screen and (max-width:568px ) {
+   #contenedroRelojBase{
+      font-size: 0.5rem;
+   }
+ }
 
  .reloj {
 	padding: 5rem;
@@ -50,6 +58,21 @@ img {
 	height: 9rem;
    position: absolute;
    z-index:2;
+}
+
+#cruz{
+   margin-left: 9rem;
+   margin-top: 19rem;
+	font-size: 1.5rem;
+   position: absolute;
+   z-index:2;
+   text-decoration: none;
+   color: black;
+}
+
+#cruz:hover{
+   color:darkred;
+   transform: scale(1.1)
 }
 
 

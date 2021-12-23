@@ -5,18 +5,14 @@ fetch("/seleccionar", {
     method: 'POST',
     headers: {'Content-Type': 'application/json'}
 })
-.then(response => response.json()
-
 //manipulacion del data para insertarlo en html
+.then(response => response.json()
 .then(data => {
-
 //parsear json a new date
    let date = ( new Date (parseInt(data.recordset[0].año),parseInt(data.recordset[0].mes),parseInt(data.recordset[0].dia),
  parseInt(data.recordset[0].hora),parseInt(data.recordset[0].minutos),parseInt(data.recordset[0].segundos)))
-
 //insertar new date en contenedor html
  contenedroRelojBase.innerHTML = date
-
  //programar reloj img con el new date   
     let horaReloj = parseInt(data.recordset[0].hora)
     let minutoReloj = parseInt(data.recordset[0].minutos)
@@ -70,38 +66,27 @@ document.querySelector("#FormEnviarDate").addEventListener("submit", function(e)
     document.querySelector("#segundos").style.transform = "rotate("+ porcentajeSegundos +"deg)";
     })
     )
-   
-     
 })
 
+//borrar datos reloj
 
-//  var today = new Date();
-//  var year = today.getFullYear();
+//Insertar Date
+document.querySelector("#cruz").addEventListener("click", function(e){
+    e.preventDefault()
+    fetch("/borrar", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'}
+    })
+    .then (response => response.json() 
+    .then(data => {
+      contenedroRelojBase.innerHTML = "Reloj Borrado"
+      document.querySelector("#horas").style.transform = "rotate("+ 0 +"deg)";
+    document.querySelector("#minutos").style.transform = "rotate("+ 0 +"deg)";
+    document.querySelector("#segundos").style.transform = "rotate("+ 0 +"deg)";
+//borrar value del input
+    document.querySelector("#inputReloj").value = "" 
+}
+))
 
-//  console.log(new Date('2023-05-05T05:55'))
+})
 
-
-
-
-
-// // Ejemplo implementando el metodo POST:
-// async function postData(url = '', data = {}) {
-//     // Opciones por defecto estan marcadas con un *
-//     const response = await fetch(url, {
-//       method: 'POST', // *GET, POST, PUT, DELETE, etc.
-//       headers: {
-//         'Content-Type': 'application/json'
-//         // 'Content-Type': 'application/x-www-form-urlencoded',
-//       },
-//     });
-//     return response.json(); // parses JSON response into native JavaScript objects
-//   }
-  
-//   postData('/seleccionar', { answer: 42 })
-//     .then(data => {
-//       console.log(data); // JSON data parsed by `data.json()` call
-//     });
-
-//     function AjaxSeleccionar (){
-//         fetch()
-//     }
